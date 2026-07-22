@@ -4,9 +4,11 @@
 
 **Clínica Salud IA** es un agente inteligente desarrollado como proyecto final del **Challenge Alura - Agentes de IA**.
 
-El objetivo principal del proyecto es crear un asistente conversacional capaz de responder preguntas utilizando información contenida dentro de documentos PDF proporcionados por el usuario.
+El objetivo principal del proyecto es crear un asistente conversacional capaz de responder preguntas utilizando información contenida en documentos PDF proporcionados por el usuario.
 
-La solución implementa una arquitectura **RAG (Retrieval Augmented Generation)**, donde el modelo de lenguaje consulta una base de conocimiento propia antes de generar una respuesta, logrando respuestas más precisas y contextualizadas.
+La solución implementa una arquitectura **RAG (Retrieval-Augmented Generation)**, donde un modelo de lenguaje consulta una base de conocimiento construida a partir del contenido del documento antes de generar una respuesta, ofreciendo respuestas más precisas, contextualizadas y alineadas con la información disponible.
+
+La aplicación utiliza **Groq** como proveedor del modelo de lenguaje (LLM), **LangChain** para la orquestación del flujo RAG, **FAISS** como base vectorial y **Hugging Face Embeddings** para la representación semántica del contenido.
 
 El usuario puede cargar documentos PDF, realizar consultas sobre su contenido y obtener respuestas generadas mediante inteligencia artificial.
 
@@ -51,7 +53,7 @@ La aplicación implementa el siguiente flujo:
  Recuperación semántica
         |
         |
- Ollama - Mistral LLM
+  Groq (Llama 3.1 8B Instant)
  Generación de respuesta
         |
         |
@@ -82,7 +84,9 @@ ALURA-AGENTE-CLINICA
 │
 ├── README.md                   # Documentación
 │
-└── .gitignore                  # Archivos excluidos de Git
+├── .gitignore                  # Archivos excluidos de Git
+│
+└── .env.example                # Variables de entorno de ejemplo
 ```
 
 ---
@@ -91,7 +95,7 @@ ALURA-AGENTE-CLINICA
 
 ## 🐍 Lenguaje de Programación
 
-- **Python 3.x**
+* **Python 3.x**
 
 Lenguaje principal utilizado para desarrollar la aplicación y la integración con modelos de inteligencia artificial.
 
@@ -105,10 +109,10 @@ Framework utilizado para construir la interfaz web interactiva del agente conver
 
 Permite:
 
-- Carga de documentos.
-- Interacción mediante chat.
-- Visualización de respuestas.
-- Gestión de la sesión del usuario.
+* Carga de documentos PDF.
+* Interacción mediante chat.
+* Visualización de respuestas.
+* Gestión de la sesión del usuario.
 
 ---
 
@@ -116,39 +120,41 @@ Permite:
 
 ### LangChain
 
-Framework utilizado para construir la arquitectura RAG, integrando:
+Framework utilizado para implementar la arquitectura RAG, integrando:
 
-- Carga de documentos.
-- División de textos.
-- Embeddings.
-- Recuperación semántica.
-- Comunicación con el modelo LLM.
+* Carga de documentos.
+* División de textos.
+* Embeddings.
+* Recuperación semántica.
+* Comunicación con el modelo de lenguaje.
 
 ---
 
-### Ollama
+### Groq
 
-Plataforma utilizada para ejecutar modelos de lenguaje localmente.
+Proveedor de inferencia de modelos de lenguaje de alta velocidad mediante API.
 
 Modelo utilizado:
 
+```text
+llama-3.1-8b-instant
 ```
-Mistral
-```
+
+Groq permite generar respuestas rápidas y eficientes a partir del contexto recuperado por la arquitectura RAG.
 
 ---
 
 ## 🧠 Modelo de Embeddings
 
-### HuggingFace Sentence Transformers
+### Hugging Face Sentence Transformers
 
 Modelo utilizado:
 
-```
+```text
 sentence-transformers/all-MiniLM-L6-v2
 ```
 
-Responsable de convertir fragmentos de texto en vectores numéricos para realizar búsquedas semánticas.
+Responsable de convertir los fragmentos de texto en vectores numéricos para realizar búsquedas semánticas.
 
 ---
 
@@ -166,14 +172,14 @@ Base vectorial utilizada para almacenar los embeddings generados y realizar bús
 
 Herramienta utilizada para:
 
-- Lectura de documentos PDF.
-- Extracción automática del contenido textual.
+* Lectura de documentos PDF.
+* Extracción automática del contenido textual.
 
 ---
 
 ### RecursiveCharacterTextSplitter
 
-Utilizado para dividir documentos grandes en fragmentos pequeños optimizados para la recuperación de información.
+Utilizado para dividir documentos grandes en fragmentos optimizados para la recuperación de información.
 
 ---
 
@@ -217,17 +223,19 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Ejecutar Ollama
+## 4. Configurar la API Key de Groq
 
-Verificar que Ollama esté instalado y ejecutar el modelo:
+Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
-```bash
-ollama run mistral
+```env
+GROQ_API_KEY=tu_api_key_de_groq
 ```
+
+La API Key puede obtenerse desde la consola de Groq.
 
 ---
 
-## 5. Ejecutar aplicación Streamlit
+## 5. Ejecutar la aplicación
 
 ```bash
 streamlit run app.py
@@ -235,7 +243,7 @@ streamlit run app.py
 
 La aplicación estará disponible en:
 
-```
+```text
 http://localhost:8501
 ```
 
@@ -259,7 +267,7 @@ Respuesta generada:
 
 Respuesta generada:
 
-> La política protege información personal proporcionada por los usuarios y establece cómo será utilizada y almacenada.
+> La política protege la información personal proporcionada por los usuarios y establece cómo será utilizada y almacenada.
 
 ---
 
@@ -281,13 +289,13 @@ Respuesta generada:
 
 ✅ División inteligente de documentos.
 
-✅ Generación de embeddings.
+✅ Generación de embeddings con Hugging Face.
 
 ✅ Base vectorial FAISS.
 
 ✅ Recuperación semántica mediante Retriever.
 
-✅ Integración con modelo LLM Mistral.
+✅ Integración con Groq (Llama 3.1 8B Instant).
 
 ✅ Arquitectura RAG completa.
 
@@ -301,16 +309,16 @@ Respuesta generada:
 
 # 📸 Capturas de Pantalla
 
-Agregar aquí imágenes mostrando:
+Agregar imágenes mostrando:
 
-- Pantalla principal del agente.
-- Carga del documento PDF.
-- Ejemplo de conversación.
-- Respuesta generada por IA.
+* Pantalla principal del agente.
+* Carga del documento PDF.
+* Ejemplo de conversación.
+* Respuesta generada por IA.
 
 Ejemplo:
 
-```
+```text
 screenshots/
 │
 ├── inicio.png
@@ -322,7 +330,9 @@ screenshots/
 
 # 📌 Conclusión
 
-El proyecto demuestra la implementación de un agente inteligente basado en arquitectura **RAG**, combinando modelos de lenguaje, búsqueda semántica y procesamiento documental para crear un asistente capaz de responder consultas utilizando información personalizada.
+El proyecto demuestra la implementación de un agente inteligente basado en arquitectura **Retrieval-Augmented Generation (RAG)**, combinando procesamiento documental, búsqueda semántica y modelos de lenguaje para ofrecer respuestas precisas fundamentadas en el contenido de documentos PDF.
+
+La integración de **Groq**, **LangChain**, **FAISS** y **Hugging Face Embeddings** permite construir una solución moderna, escalable y eficiente para consultas inteligentes sobre documentación personalizada.
 
 ---
 
@@ -334,4 +344,4 @@ Proyecto desarrollado como parte del:
 
 **Challenge Final - Alura Agentes Inteligentes**
 
-Año: 2026
+Año: **2026**
