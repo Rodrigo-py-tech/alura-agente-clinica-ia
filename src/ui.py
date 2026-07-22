@@ -21,8 +21,9 @@ def mostrar_sidebar():
         st.write("### 📄 Documento")
 
         archivo = st.file_uploader(
-            "Seleccione un archivo PDF",
-            type=["pdf"]
+            "Seleccione un documento PDF",
+            type=["pdf"],
+            help="Suba un documento para que el asistente pueda responder preguntas sobre su contenido."
         )
 
         st.markdown("---")

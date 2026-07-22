@@ -3,10 +3,46 @@ import streamlit as st
 from src.ui import configurar_pagina
 from src.ui import mostrar_sidebar
 
+import tempfile
+
+from src.pdf_loader import cargar_pdf
+from src.pdf_loader import dividir_documentos
+
 
 configurar_pagina()
 
 archivo_pdf, limpiar = mostrar_sidebar()
+
+chunks = None
+
+if archivo_pdf:
+
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as temp_pdf:
+
+        temp_pdf.write(
+            archivo_pdf.read()
+        )
+
+        ruta_pdf = temp_pdf.name
+
+    documentos = cargar_pdf(ruta_pdf)
+
+    chunks = dividir_documentos(documentos)
+
+    st.success(
+        f"PDF cargado correctamente."
+    )
+
+    st.info(
+        f"Páginas: {len(documentos)}"
+    )
+
+    st.info(
+        f"Fragmentos generados: {len(chunks)}"
+    )
 
 
 st.title("🏥 Clínica Salud IA")
