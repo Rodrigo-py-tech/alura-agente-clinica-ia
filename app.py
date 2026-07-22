@@ -8,11 +8,14 @@ import tempfile
 from src.pdf_loader import cargar_pdf
 from src.pdf_loader import dividir_documentos
 
+from src.vectorstore import crear_vectorstore
+
 
 configurar_pagina()
 
 archivo_pdf, limpiar = mostrar_sidebar()
 
+vectorstore = None
 chunks = None
 
 if archivo_pdf:
@@ -31,6 +34,14 @@ if archivo_pdf:
     documentos = cargar_pdf(ruta_pdf)
 
     chunks = dividir_documentos(documentos)
+
+    vectorstore = crear_vectorstore(chunks)
+
+    st.success("Base vectorial creada correctamente.")
+
+    st.info(
+        f"Fragmentos indexados: {len(chunks)}"
+    )
 
     st.success(
         f"PDF cargado correctamente."
@@ -108,3 +119,27 @@ if limpiar:
     st.session_state.messages = []
 
     st.rerun()
+
+if vectorstore is not None:
+
+    resultados = vectorstore.similarity_search(
+        "privacidad",
+        k=2
+    )
+
+    st.write("### Resultado de prueba")
+
+    st.session_state.vectorstore = crear_vectorstore(chunks)
+
+    for resultado in resultados:
+
+        st.write(resultado.page_content[:300])
+
+        st.divider()
+
+if "vectorstore" in st.session_state:
+
+    resultados = st.session_state.vectorstore.similarity_search(
+        "privacidad",
+        k=2
+    )
