@@ -311,19 +311,15 @@ Respuesta generada:
 
 Agregar imágenes mostrando:
 
-* Pantalla principal del agente.
-* Carga del documento PDF.
-* Ejemplo de conversación.
-* Respuesta generada por IA.
+* ¿Cuál es el objetivo principal del documento?
+![alt text](image.png)
 
-Ejemplo:
+* ¿Qué políticas de privacidad se describen?
+![alt text](image-1.png)
 
-```text
-screenshots/
-│
-├── inicio.png
-├── carga_pdf.png
-└── respuesta.png
+* ¿Cual es el contacto de la clinica?
+![alt text](image-2.png)
+
 ```
 
 ---
