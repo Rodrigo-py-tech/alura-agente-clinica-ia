@@ -4,13 +4,11 @@ from dotenv import load_dotenv
 import os
 
 
-# Cargar variables del archivo .env
 load_dotenv()
-print("GROQ:", os.getenv("GROQ_API_KEY"))
+
 
 def crear_agente(vectorstore):
 
-    # Crear buscador de documentos
     retriever = vectorstore.as_retriever(
         search_kwargs={
             "k": 3
@@ -18,18 +16,16 @@ def crear_agente(vectorstore):
     )
 
 
-    # Obtener API KEY de Groq
     api_key = os.getenv("GROQ_API_KEY")
 
 
     if not api_key:
         raise ValueError(
-            "No existe GROQ_API_KEY configurada. "
-            "Verifica el archivo .env"
+            "No existe GROQ_API_KEY configurada"
         )
 
 
-    # Modelo LLM de Groq
+    # Modelo Groq
     llm = ChatGroq(
         model="llama-3.1-8b-instant",
         temperature=0,
@@ -37,27 +33,20 @@ def crear_agente(vectorstore):
     )
 
 
-    # Prompt del agente RAG
     prompt = ChatPromptTemplate.from_template(
         """
-        Eres Clínica Salud IA, un asistente virtual especializado
-        en responder consultas relacionadas con información clínica.
+        Eres Clínica Salud IA, un asistente virtual.
 
-        Utiliza únicamente el contexto proporcionado del documento.
+        Responde utilizando solamente el contexto entregado.
 
-        Si la información solicitada no se encuentra en el contexto,
-        responde:
-        "No tengo información suficiente en la documentación disponible."
-
-        No inventes información.
+        Si la información no aparece en el contexto,
+        indica que no existe información suficiente.
 
         CONTEXTO:
         {context}
 
-
         PREGUNTA:
         {question}
-
 
         RESPUESTA:
         """
@@ -66,36 +55,27 @@ def crear_agente(vectorstore):
 
     def responder(pregunta):
 
-        # Buscar información relevante en la base vectorial
         documentos = retriever.invoke(
             pregunta
         )
 
 
-        # Construir contexto
-        if documentos:
-
-            contexto = "\n\n".join(
-                [
-                    documento.page_content
-                    for documento in documentos
-                ]
-            )
-
-        else:
-
-            contexto = (
-                "No se encontró información relacionada "
-                "en la documentación."
-            )
+        contexto = "\n\n".join(
+            [
+                doc.page_content
+                for doc in documentos
+            ]
+        )
 
 
-        # Generar respuesta con IA
+        mensaje = prompt.format(
+            context=contexto,
+            question=pregunta
+        )
+
+
         respuesta = llm.invoke(
-            prompt.format(
-                context=contexto,
-                question=pregunta
-            )
+            mensaje
         )
 
 
