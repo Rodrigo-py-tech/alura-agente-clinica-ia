@@ -52,11 +52,13 @@ Cuando el procesamiento haya finalizado, podrás escribir preguntas relacionadas
 Ejemplos:
 
 * ¿Cuál es el objetivo principal del documento?
-* ¿Qué políticas de privacidad se describen?
-* ¿Cuáles son las responsabilidades del usuario?
-* Resume el contenido del documento.
-* ¿Qué información importante contiene el PDF?
+![alt text](image.png)
 
+* ¿Qué políticas de privacidad se describen?
+![alt text](image-1.png)
+
+* ¿Cual es el contacto de la clinica?
+![alt text](image-2.png)
 ---
 
 ## 5. Obtener la respuesta
