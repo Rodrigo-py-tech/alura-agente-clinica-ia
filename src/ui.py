@@ -4,8 +4,8 @@ import streamlit as st
 def configurar_pagina():
 
     st.set_page_config(
-        page_title="Alura Agente Clínica IA",
-        page_icon="🤖",
+        page_title="Agente de Consultas IA",
+        page_icon="",
         layout="wide"
     )
 
@@ -14,7 +14,7 @@ def mostrar_sidebar():
 
     with st.sidebar:
 
-        st.title("🤖 Alura Agente")
+        st.title(" Proyecto Python 360")
 
         st.markdown("---")
 

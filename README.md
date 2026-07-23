@@ -1,8 +1,8 @@
-# 🏥 Clínica Salud IA - Agente Inteligente RAG
+# Consultas IA - Agente Inteligente RAG
 
 ## 📌 Descripción General del Proyecto
 
-**Clínica Salud IA** es un agente inteligente desarrollado como proyecto final del **Challenge Alura - Agentes de IA**.
+**Consulta IA** es un agente inteligente desarrollado como proyecto final.
 
 El objetivo principal del proyecto es crear un asistente conversacional capaz de responder preguntas utilizando información contenida en documentos PDF proporcionados por el usuario.
 

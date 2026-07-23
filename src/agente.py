@@ -35,7 +35,7 @@ def crear_agente(vectorstore):
 
     prompt = ChatPromptTemplate.from_template(
         """
-        Eres Clínica Salud IA, un asistente virtual.
+        Eres Consultas IA, un asistente virtual.
 
         Responde utilizando solamente el contexto entregado.
 

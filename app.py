@@ -30,7 +30,7 @@ if "messages" not in st.session_state:
         {
             "role": "assistant",
             "content":
-            "¡Hola! 👋 Soy tu asistente inteligente de Clínica Salud IA. "
+            "¡Hola! 👋 Soy tu asistente inteligente de Consultas IA. "
             "Carga un PDF para comenzar a responder consultas."
         }
     ]
@@ -95,12 +95,12 @@ if archivo_pdf:
 # ================================
 
 st.title(
-    "🏥 Clínica Salud IA"
+    "Consultas IA"
 )
 
 
 st.caption(
-    "Challenge Final - Alura Agente Inteligente"
+    "Challenge Final - Agente Inteligente"
 )
 
 
